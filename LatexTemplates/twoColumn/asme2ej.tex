@@ -42,7 +42,7 @@
 	FH W\"urzburg-Schweinfurt\\
 	Fakult\"at Informatik\\
 	Matrikelnummer: 511xxx\\
-    Email: jochen2.schmidt@fhws.student.de
+    Email: jochen.schmidt1@fhws.student.de
     }	
 }
 
@@ -88,43 +88,22 @@ An abstract for an ASME paper should be less than 150 words and is normally in i
 \end{abstract}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{nomenclature}
-\entry{A}{You may include nomenclature here.}
-\entry{$\alpha$}{There are two arguments for each entry of the nomemclature environment, the symbol and the definition.}
-\end{nomenclature}
-
-The primary text heading is  boldface and flushed left with the left margin.  The spacing between the  text and the heading is two line spaces.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Einf\"uhrung zu Elasticsearch}
-
-\subsection{Kibana}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Datenbank Thema: Fitnessstudios}
+\section{Datenbank Thema: Fitness und Ern\"ahrungs Tracker}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Verwaltung}
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Trainingspl"ane}
 
 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Ern\"ahrung}
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Datenbankschema-Relational}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Datenbankschema-Anpassungen f\"ur Elasticsearch}
-
+Um das bereist vorgestellte Datenbankschema besser verwendbar zu machen, in Bezug auf Elasticsearch und Kibana, m\"ussen einige Anpassungen vorgenommen werden. Die aus Relationalen Datenbanken bekannten 'joins', und somit das erstellen von vielschichtigen Queries u\"ber mehrere Tabellen, vergleichbar mit Indizes in Elasticsearch, m\"ussen groesstenteils entfernt werden. SQL-Style joins sind in Elasticsearch so kostenintensiv das sie eigentlich grunds\"atzlich verboten sind
 \subsection{Kibana spezifische \"Anderungen}
 
 

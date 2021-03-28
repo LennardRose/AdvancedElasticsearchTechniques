@@ -1,0 +1,141 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%% asme2ej.tex %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Template for producing ASME-format journal articles using LaTeX    %
+% Written by   Harry H. Cheng, Professor and Director                %
+%              Integration Engineering Laboratory                    %
+%              Department of Mechanical and Aeronautical Engineering %
+%              University of California                              %
+%              Davis, CA 95616                                       %
+%              Tel: (530) 752-5020 (office)                          %
+%                   (530) 752-1028 (lab)                             %
+%              Fax: (530) 752-4158                                   %
+%              Email: hhcheng@ucdavis.edu                            %
+%              WWW:   http://iel.ucdavis.edu/people/cheng.html       %
+%              May 7, 1994                                           %
+% Modified: February 16, 2001 by Harry H. Cheng                      %
+% Modified: January  01, 2003 by Geoffrey R. Shiflett                %
+% Use at your own risk, send complaints to /dev/null                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% use twocolumn and 10pt options with the asme2ej format
+\documentclass[twocolumn,10pt]{asme2ej}
+
+\usepackage{epsfig} %% for loading postscript figures
+
+%% The class has several options
+%  onecolumn/twocolumn - format for one or two columns per page
+%  10pt/11pt/12pt - use 10, 11, or 12 point font
+%  oneside/twoside - format for oneside/twosided printing
+%  final/draft - format for final/draft copy
+%  cleanfoot - take out copyright info in footer leave page number
+%  cleanhead - take out the conference banner on the title page
+%  titlepage/notitlepage - put in titlepage or leave out titlepage
+%  
+%% The default is oneside, onecolumn, 10pt, final
+
+
+\title{Advanced Database Techniques - Aufgabe 1 - Entwicklung eines Datenbankschemas}
+
+%%% first author
+\author{Jochen Schmidt
+	\affiliation{
+		Student, Informatik\\
+		FH W\"urzburg-Schweinfurt\\
+		Fakult\"at Informatik\\
+		Matrikelnummer: 511xxx\\
+		Email: jochen.schmidt1@fhws.student.de
+	}	
+}
+
+%%% second author
+%%% remove the following entry for single author papers
+%%% add more entries for additional authors
+\author{Lennard Rose
+	\affiliation{
+		Student, Informatik\\
+		FH W\"urzburg-Schweinfurt\\
+		Fakult\"at Informatik\\
+		Matrikelnummer: 511xxx\\
+		Email: lennard.rose@fhws.student.de
+	}	
+}
+
+%%% second author
+%%% remove the following entry for single author papers
+%%% add more entries for additional authors
+\author{Moritz Zeitler
+	\affiliation{
+		Student, Informatik\\
+		FH W\"urzburg-Schweinfurt\\
+		Fakult\"at Informatik\\
+		Matrikelnummer: 5118094\\
+		Email: moritz.zeitler@fhws.student.de
+	}	
+}
+
+
+
+\begin{document}
+	
+	\maketitle    
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\begin{abstract}
+		{\it Im Kurs 'Advanced Database Techniques' an der FHWS soll im Laufe des Kurses eine Datenbank, von den Studenten gew\"ahlt auf Herz und Nieren geprueft werden. Die Gruppe um Lennard Rose, Jochen Schmidt und Moritz Zeitler entschied sich daraufhin Elasticsearch als ebene diese zu verwenden, unter dem Bewusstsein das Elasticsearch eigentlich keine klassische Datenbank ist sondern eher eine Suchmaschine. Bei der ersten Aufgabe soll nun f\"ur ein freigew\"ahltes Thema ein Datenbankschema erstellt werden. Dies wird im folgenden genauer beleuchtet.}
+	\end{abstract}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\section{Datenbank Thema: Fitness und Ern\"ahrungs Tracker}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\subsection{Verwaltung}
+	
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\subsection{Trainingspl"ane}
+	
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\subsection{Ern\"ahrung}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\section{Datenbankschema-Anpassungen f\"ur Elasticsearch}
+	Um das bereist vorgestellte Datenbankschema besser verwendbar zu machen, in Bezug auf Elasticsearch und Kibana, m\"ussen einige Anpassungen vorgenommen werden. Die aus Relationalen Datenbanken bekannten 'joins', und somit das erstellen von vielschichtigen Queries u\"ber mehrere Tabellen, vergleichbar mit Indizes in Elasticsearch, m\"ussen groesstenteils entfernt werden. SQL-Style joins sind in Elasticsearch so kostenintensiv das sie eigentlich grunds\"atzlich verboten sind\cite{esjoins}.
+	Elasticsearch betrachtet die Welt daher auf einer eher horizontalen Ebene\cite{esDgFlatEarth}, Objekte die in Elasticsearch gespeichert werden sollten daher geebnet werden (aus dem englischen 'flatten'). \newline
+	Hier gibt es verschiedene Optionen um diese flache Welt zu realisieren. Unter anderem k\"onnte zum Beispiel auf Applikationsseite eine Art 'join' \"uber mehrer Indizes implementiert werden. Da sich der Kurs aber nur im die Datenbank drehen soll, stellt dies keine ernsthafte Option dar. Hingegen sinnvoller sind hier entweder sogenannte 'nested objects' \cite{esDgNestedObjects} oder eine Art 'Parent-Child-Beziehung' zwischen den Objekten\cite{esDgParent-Child-Relationship}. Grunds\"atzlich gilt aber f\"ur beide Optionen das die Daten im gleichen Index abgelegt werden. Dies bedeutet das zwar die Abfragen an sich komplexer werden, aber nicht \"uber mehrere Indizes hinweg gesucht wird.
+	\subsection{Kibana spezifische \"Anderungen}
+	
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\section{Fazit}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\section{Lessons Learned}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	% The bibliography is stored in an external database file
+	% in the BibTeX format (file_name.bib).  The bibliography is
+	% created by the following command and it will appear in this
+	% position in the document. You may, of course, create your
+	% own bibliography by using thebibliography environment as in
+	%
+	% \begin{thebibliography}{12}
+	% ...
+	% \bibitem{itemreference} D. E. Knudsen.
+	% {\em 1966 World Bnus Almanac.}
+	% {Permafrost Press, Novosibirsk.}
+	% ...
+	% \end{thebibliography}
+	
+	% Here's where you specify the bibliography style file.
+	% The full file name for the bibliography style file 
+	% used for an ASME paper is asmems4.bst.
+	\bibliographystyle{asmems4}
+	
+	% Here's where you specify the bibliography database file.
+	% The full file name of the bibliography database for this
+	% article is asme2e.bib. The name for your database is up
+	% to you.
+	\bibliography{asme2e}
+	
+	
+\end{document}
