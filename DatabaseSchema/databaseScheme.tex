@@ -100,13 +100,24 @@
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\section{Datenbankschema-Anpassungen f\"ur Elasticsearch}
 	Um das bereist vorgestellte Datenbankschema besser verwendbar zu machen, in Bezug auf Elasticsearch und Kibana, m\"ussen einige Anpassungen vorgenommen werden. Die aus Relationalen Datenbanken bekannten 'joins', und somit das erstellen von vielschichtigen Queries u\"ber mehrere Tabellen, vergleichbar mit Indizes in Elasticsearch, m\"ussen groesstenteils entfernt werden. SQL-Style joins sind in Elasticsearch so kostenintensiv das sie eigentlich grunds\"atzlich verboten sind\cite{esjoins}.
-	Elasticsearch betrachtet die Welt daher auf einer eher horizontalen Ebene\cite{esDgFlatEarth}, Objekte die in Elasticsearch gespeichert werden sollten daher geebnet werden (aus dem englischen 'flatten'). \newline
-	Hier gibt es verschiedene Optionen um diese flache Welt zu realisieren. Unter anderem k\"onnte zum Beispiel auf Applikationsseite eine Art 'join' \"uber mehrer Indizes implementiert werden. Da sich der Kurs aber nur im die Datenbank drehen soll, stellt dies keine ernsthafte Option dar. Hingegen sinnvoller sind hier entweder sogenannte 'nested objects' \cite{esDgNestedObjects} oder eine Art 'Parent-Child-Beziehung' zwischen den Objekten\cite{esDgParent-Child-Relationship}. Grunds\"atzlich gilt aber f\"ur beide Optionen das die Daten im gleichen Index abgelegt werden. Dies bedeutet das zwar die Abfragen an sich komplexer werden, aber nicht \"uber mehrere Indizes hinweg gesucht wird.
+	Elasticsearch betrachtet die Welt daher auf einer eher horizontalen Ebene\cite[Chapter~40]{esDg}, Objekte die in Elasticsearch gespeichert werden sollten daher geebnet werden (aus dem englischen 'flatten'). \newline
+	Hier gibt es verschiedene Optionen um diese flache Welt zu realisieren. Unter anderem k\"onnte zum Beispiel auf Applikationsseite eine Art 'join' \"uber mehrer Indizes implementiert werden. Da sich der Kurs aber nur im die Datenbank drehen soll, stellt dies keine ernsthafte Option dar. Hingegen sinnvoller sind hier entweder sogenannte 'nested objects' \cite[Chapter~41]{esDg} oder eine Art 'Parent-Child-Beziehung' zwischen den Objekten\cite[Chapter~42]{esDg}. Grunds\"atzlich gilt aber f\"ur beide Optionen das die Daten im gleichen Index abgelegt werden. Dies bedeutet das zwar die Abfragen an sich komplexer werden, aber nicht \"uber mehrere Indizes hinweg gesucht wird. \newline
+	An einigen stellen ist aber eine Denormalisierung, und somit eine redundante Datenhaltung sinnvoll. Dies ist die Beste, weil die schnellste L\"osung, um relationale Modell in Elasticsearch darzustellen. \newline
+	Jeder dieser M\"oglichkeiten bringt seine Vor- und Nachteile mit sich. Hier sind drei Metriken zu beachten: Indizierungs Zeit, Dauer der Suche und Datenmenge. Solange der Speicherverbrauch nicht entscheidend ist, kommt eine komplette Denormalisierung durchaus in Frage. Da bisher aber keine Hardware vorgaben bestehen nehmen wir an, dass diese begrenzt ist. Daher besteht nun die Frage ob fuer die Aufl\"osung eben nun 'Parent-Child-Beziehungen' oder 'Nested-objects' verwendet werden soll. Grunds\"atzlich ist die 'Parent-Child-Beziehung' besser geeignet wenn die Indizierungszeit\cite[Chapter~42]{esDg} ausschlaggebend ist und vice versa 'Nested-Objects' besser f\"ur Suchzeiten.\newline 
+	Dies wird aber nun anhand von festen Beispielen Individuell bewertet:
+	\begin{enumerate}
+		\item Alle Verbindungstabellen die im relationalen Modell n:m Beziehungen aufl\"osen werden ohne Ausnahme denormalisiert und 'redundant' abgelegt. Zum Beispiel kann man hier alle Entit\"aten im Bezug auf die \"Ubungen nehmen wie 'exercise', 'exercise-entry' oder 'workout-entry'.
+		\item Aufgrund von Geschwindigkeit der Indizierung ist f\"ur die Entit\"aten die im Bezug auf die Mitgliederverwaltung stehen eine 'Parent-Child-Beziehung' von Vortail. Dadurch k\"onnen \"Anderungen an der Mitgliedschaft schneller verarbeitet werden. Dies ist durch direkten Kundenkontakt durchaus sinnvoll, da der Kunde so m\"oglichst schnell seine \"Anderungen einsehen kann.
+		\item Im Bereich der Trainingspl\"ane wird dann auf nested objects gesetzt. Hier sind vor allem schnelle Suchen nach passenden Workouts f\"ur den einzelnen Sportler von n\"oten.
+	\end{enumerate}
 	\subsection{Kibana spezifische \"Anderungen}
 	
 	
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\section{Fazit}
+	dynamic mapping muessen wir fuer nested objects ueberschreiben, type nested drauss machen
+	sonst waere es type object
+	
 	
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\section{Lessons Learned}
